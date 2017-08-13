@@ -8,23 +8,19 @@ set(INCLUDE_FILES)
 
 set(SOURCE_FILES
         src/Windows/QLayoutMainWindow.cpp
-        src/Dialogs/LayoutSavingDialog.cpp )
-
-set(UNMANAGED_FILES
-        )
+        src/Dialogs/LayoutSavingDialog.cpp
+)
 
 set(QOBJECT_HEADERS
         include/Windows/QLayoutMainWindow.h
-        include/Dialogs/LayoutSavingDialog.h)
+        include/Dialogs/LayoutSavingDialog.h
+)
 
 set(UI_FILES
-        ui/layout_saving_dialog.ui)
-
-set(MAIN_FILE )
-
-include_directories(
-        include
+        ui/layout_saving_dialog.ui
 )
+
+include_directories(include)
 
 #------------------------
 # Setuping Qt
@@ -49,7 +45,7 @@ qt5_wrap_ui(
 # Adding to executable
 #------------------------
 
-add_executable(QLayoutBasedMainWindow
+add_library(QLayoutBasedMainWindow STATIC
         ${UI_HDRS}
         ${UI_SOURCE}
         ${MAIN_FILE}
@@ -58,6 +54,5 @@ add_executable(QLayoutBasedMainWindow
         ${UNMANAGED_FILES}
         ${RESOURCE_ADDED}
         ${QOBJECT_HEADERS}
-        )
-
+)
 qt5_use_modules(QLayoutBasedMainWindow Core Widgets Gui)

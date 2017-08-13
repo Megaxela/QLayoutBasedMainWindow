@@ -162,6 +162,9 @@ QByteArray Windows::QLayoutMainWindow::getCurrentLayout() const
 
 void Windows::QLayoutMainWindow::initLayoutSystem(QMenu *parentMenu)
 {
+    // Removing central widget
+    setCentralWidget(nullptr);
+
     m_parentMenu = parentMenu;
 
     // Adding Save and Load buttons

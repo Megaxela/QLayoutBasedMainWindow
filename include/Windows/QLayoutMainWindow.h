@@ -5,6 +5,8 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QVBoxLayout>
+#include <QDockWidget>
 
 namespace Windows
 {
@@ -77,6 +79,41 @@ namespace Windows
          * @return
          */
         QByteArray getCurrentLayout() const;
+
+        /**
+         * @brief Method for adding different widgets to dock.
+         * @tparam T Widget that has to be added.
+         * @param title Name of dock.
+         * @param objectName Object name of dock. Has to be unique.
+         * @return Created dock widget.
+         */
+        template<typename T>
+        QDockWidget* addDockWidget(const QString& title, const QString& objectName)
+        {
+            // Creating dock widget
+            auto dockWidget = new QDockWidget(title, this);
+            dockWidget->setObjectName(objectName);
+
+            // Creating widget for layout
+            auto dockWidgetContent = new QWidget(dockWidget);
+
+            // Creating layout
+            auto verticalLayout = new QVBoxLayout(dockWidgetContent);
+
+            // Setting up layout
+            verticalLayout->setContentsMargins(0, 0, 0, 0);
+
+            // Creating  widget
+            auto listWidget = new T(dockWidgetContent);
+
+            // Adding widget to layout
+            verticalLayout->addWidget(listWidget);
+
+            // Adding dock widget content to dock widget.
+            dockWidget->setWidget(dockWidgetContent);
+
+            return dockWidget;
+        }
 
     protected:
 

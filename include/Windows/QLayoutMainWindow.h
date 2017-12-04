@@ -137,6 +137,13 @@ namespace Windows
          */
         void updateAvailableLayouts();
 
+        /**
+         * @brief Method for getting widget, bounded to dock widget.
+         * @param dockWidget Pointer to dock widget.
+         * @return Widget bounded to dock widget.
+         */
+        static QWidget* getWidgetFromDockWidget(QDockWidget* dockWidget);
+
     private:
 
         // Preventing copying

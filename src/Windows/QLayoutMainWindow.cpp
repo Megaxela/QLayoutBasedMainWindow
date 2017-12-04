@@ -218,3 +218,11 @@ void Windows::QLayoutMainWindow::saveLayout(const QString& name)
 
     updateAvailableLayouts();
 }
+
+QWidget *Windows::QLayoutMainWindow::getWidgetFromDockWidget(QDockWidget *dockWidget)
+{
+    return dynamic_cast<QVBoxLayout*>(
+        dockWidget->widget()
+            ->children()[0]
+    )->itemAt(0)->widget();
+}

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <include/Dialogs/LayoutSavingDialog.h>
 
-Windows::QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :
+QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_layoutMenus(),
     m_parentMenu(nullptr),
@@ -17,12 +17,12 @@ Windows::QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :
 
 }
 
-Windows::QLayoutMainWindow::~QLayoutMainWindow()
+QLayoutMainWindow::~QLayoutMainWindow()
 {
 
 }
 
-void Windows::QLayoutMainWindow::updateAvailableLayouts()
+void QLayoutMainWindow::updateAvailableLayouts()
 {
     // Clearing old layouts
     for (auto& oldMenus : m_layoutMenus)
@@ -88,17 +88,17 @@ void Windows::QLayoutMainWindow::updateAvailableLayouts()
     }
 }
 
-void Windows::QLayoutMainWindow::setLayoutStorageFilename(const QString& filename)
+void QLayoutMainWindow::setLayoutStorageFilename(const QString& filename)
 {
     m_layoutStorageFilename = filename;
 }
 
-QString Windows::QLayoutMainWindow::layoutStorageFilename() const
+QString QLayoutMainWindow::layoutStorageFilename() const
 {
     return m_layoutStorageFilename;
 }
 
-void Windows::QLayoutMainWindow::deleteLayout(const QString& groupName)
+void QLayoutMainWindow::deleteLayout(const QString& groupName)
 {
     QSettings layouts(m_layoutStorageFilename, QSettings::IniFormat);
 
@@ -116,7 +116,7 @@ void Windows::QLayoutMainWindow::deleteLayout(const QString& groupName)
     updateAvailableLayouts();
 }
 
-void Windows::QLayoutMainWindow::applyLayout(const QString& groupName)
+void QLayoutMainWindow::applyLayout(const QString& groupName)
 {
     if (groupName.isEmpty())
     {
@@ -138,7 +138,7 @@ void Windows::QLayoutMainWindow::applyLayout(const QString& groupName)
     layouts.endGroup();
 }
 
-QStringList Windows::QLayoutMainWindow::availableLayouts() const
+QStringList QLayoutMainWindow::availableLayouts() const
 {
     QStringList list;
     
@@ -150,17 +150,17 @@ QStringList Windows::QLayoutMainWindow::availableLayouts() const
     return list;
 }
 
-int Windows::QLayoutMainWindow::getWindowVersion() const
+int QLayoutMainWindow::getWindowVersion() const
 {
     return 0;
 }
 
-QByteArray Windows::QLayoutMainWindow::getCurrentLayout() const
+QByteArray QLayoutMainWindow::getCurrentLayout() const
 {
     return saveState(getWindowVersion());
 }
 
-void Windows::QLayoutMainWindow::initLayoutSystem(QMenu *parentMenu)
+void QLayoutMainWindow::initLayoutSystem(QMenu *parentMenu)
 {
     // Removing central widget
     setCentralWidget(nullptr);
@@ -188,7 +188,7 @@ void Windows::QLayoutMainWindow::initLayoutSystem(QMenu *parentMenu)
     updateAvailableLayouts();
 }
 
-void Windows::QLayoutMainWindow::saveLayout()
+void QLayoutMainWindow::saveLayout()
 {
     // Display layout saving dialog
     Dialogs::LayoutSavingDialog dialog(this);
@@ -205,7 +205,7 @@ void Windows::QLayoutMainWindow::saveLayout()
     saveLayout(layoutName);
 }
 
-void Windows::QLayoutMainWindow::saveLayout(const QString& name)
+void QLayoutMainWindow::saveLayout(const QString& name)
 {
     QSettings layouts(m_layoutStorageFilename, QSettings::IniFormat);
 
@@ -219,7 +219,7 @@ void Windows::QLayoutMainWindow::saveLayout(const QString& name)
     updateAvailableLayouts();
 }
 
-QWidget *Windows::QLayoutMainWindow::getWidgetFromDockWidget(QDockWidget *dockWidget)
+QWidget *QLayoutMainWindow::getWidgetFromDockWidget(QDockWidget *dockWidget)
 {
     return dynamic_cast<QVBoxLayout*>(
         dockWidget->widget()

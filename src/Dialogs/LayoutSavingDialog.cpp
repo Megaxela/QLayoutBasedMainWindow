@@ -3,43 +3,46 @@
 //
 
 #include "Dialogs/LayoutSavingDialog.h"
-#include <QtWidgets/QDialogButtonBox>
+#include <QDialogButtonBox>
 #include <ui_layout_saving_dialog.h>
 
-Dialogs::LayoutSavingDialog::LayoutSavingDialog(QWidget *parent) :
+LayoutSavingDialog::LayoutSavingDialog(QWidget *parent) :
         QDialog(parent),
         m_ui(new Ui::SaveLayoutDialog),
         m_layoutName()
 {
     m_ui->setupUi(this);
+
+    setModal(true);
+
     performConnections();
 }
 
-QString Dialogs::LayoutSavingDialog::layoutName() const
+QString LayoutSavingDialog::layoutName() const
 {
     return m_layoutName;
 }
 
-void Dialogs::LayoutSavingDialog::onOkButtonPressed()
+void LayoutSavingDialog::onOkButtonPressed()
 {
     m_layoutName = m_ui->layoutNameLineEdit->text();
     close();
 }
 
-void Dialogs::LayoutSavingDialog::onCancelButtonPressed()
+void LayoutSavingDialog::onCancelButtonPressed()
 {
     close();
 }
 
-void Dialogs::LayoutSavingDialog::performConnections()
+void LayoutSavingDialog::performConnections()
 {
     connect(m_ui->buttonBox,
             &QDialogButtonBox::accepted,
             this,
-            &Dialogs::LayoutSavingDialog::onOkButtonPressed);
+            &LayoutSavingDialog::onOkButtonPressed);
 
     connect(m_ui->buttonBox,
             &QDialogButtonBox::rejected,
             this,
-            &Dialogs::LayoutSavingDialog::onCancelButtonPressed);
+            &LayoutSavingDialog::onCancelButtonPressed);
 }

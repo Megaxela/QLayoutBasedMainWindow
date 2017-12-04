@@ -191,7 +191,7 @@ void QLayoutMainWindow::initLayoutSystem(QMenu *parentMenu)
 void QLayoutMainWindow::saveLayout()
 {
     // Display layout saving dialog
-    Dialogs::LayoutSavingDialog dialog(this);
+    LayoutSavingDialog dialog(this);
     dialog.exec();
 
     auto layoutName = dialog.layoutName();

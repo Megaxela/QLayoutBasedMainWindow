@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QVBoxLayout>
 #include <QDockWidget>
+#include <QMenu>
 
 /**
  * @brief Base class for layout based main windows.
@@ -26,7 +27,11 @@ public:
     /**
      * @brief Virtual destructor.
      */
-    virtual ~QLayoutMainWindow();
+    ~QLayoutMainWindow() override = default;
+
+    // Preventing copying
+    QLayoutMainWindow(const QLayoutMainWindow&) = delete;
+    QLayoutMainWindow& operator=(const QLayoutMainWindow&) = delete;
 
     /**
      * @brief Method for setting layout storage filename.
@@ -109,12 +114,43 @@ public:
         // Adding dock widget content to dock widget.
         dockWidget->setWidget(dockWidgetContent);
 
+        // If window menu specified, add view
+        if (m_windowMenu)
+        {
+            auto a = m_windowMenu->addAction(title, [dockWidget](bool checked)
+            {
+                dockWidget->setVisible(checked);
+            });
+
+            a->setCheckable(true);
+
+            connect(
+                dockWidget,
+                &QDockWidget::visibilityChanged,
+                [a](bool visible)
+                {
+                    a->setChecked(visible);
+                }
+            );
+
+        }
+
         return dockWidget;
     }
 
 protected:
 
+    /**
+     * @brief Method for setting layout system save/load menu.
+     * @param parentMenu
+     */
     void initLayoutSystem(QMenu* parentMenu);
+
+    /**
+     * @brief Method for setting dock widget show/hide menu.
+     * @param parentMenu
+     */
+    void initDockWidgetMenu(QMenu* parentMenu);
 
     /**
      * @brief Method that has to return window version. Different settings
@@ -143,10 +179,6 @@ protected:
 
 private:
 
-    // Preventing copying
-    QLayoutMainWindow(const QLayoutMainWindow&) = delete;
-    QLayoutMainWindow& operator=(const QLayoutMainWindow&) = delete;
-
     /**
      * @brief Structure for holding layout data.
      */
@@ -162,7 +194,7 @@ private:
             name(name)
         {}
 
-        LayoutDataHolder(const LayoutDataHolder& holder) :
+        explicit LayoutDataHolder(const LayoutDataHolder& holder) :
             menuEntry(holder.menuEntry),
             name(holder.name)
         {
@@ -181,6 +213,7 @@ private:
     };
 
     QList<LayoutDataHolder> m_layoutMenus;
-    QMenu* m_parentMenu;
+    QMenu* m_layoutMenu;
+    QMenu* m_windowMenu;
     QString m_layoutStorageFilename;
 };

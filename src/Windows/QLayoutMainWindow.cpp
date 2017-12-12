@@ -11,13 +11,9 @@
 QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_layoutMenus(),
-    m_parentMenu(nullptr),
+    m_layoutMenu(nullptr),
+    m_windowMenu(nullptr),
     m_layoutStorageFilename("layout.ini")
-{
-
-}
-
-QLayoutMainWindow::~QLayoutMainWindow()
 {
 
 }
@@ -25,7 +21,7 @@ QLayoutMainWindow::~QLayoutMainWindow()
 void QLayoutMainWindow::updateAvailableLayouts()
 {
     // Clearing old layouts
-    for (auto& oldMenus : m_layoutMenus)
+    for (auto&& oldMenus : m_layoutMenus)
     {
         oldMenus.menuEntry->deleteLater();
     }
@@ -37,7 +33,7 @@ void QLayoutMainWindow::updateAvailableLayouts()
 
     auto groups = layouts.childGroups();
 
-    if (m_parentMenu == nullptr)
+    if (m_layoutMenu == nullptr)
     {
         std::cerr << "Can't update available layouts without parent menu layout" << std::endl;
         return;
@@ -58,7 +54,7 @@ void QLayoutMainWindow::updateAvailableLayouts()
         }
 
         // Creating actions for menu
-        auto newMenu = new QMenu(layouts.value("name").toString(), m_parentMenu);
+        auto newMenu = new QMenu(layouts.value("name").toString(), m_layoutMenu);
 
         auto applyAction = new QAction(tr("Apply"), newMenu);
         newMenu->addAction(applyAction);
@@ -80,7 +76,7 @@ void QLayoutMainWindow::updateAvailableLayouts()
                     deleteLayout(groupName);
                 });
 
-        m_parentMenu->addMenu(newMenu);
+        m_layoutMenu->addMenu(newMenu);
 
         m_layoutMenus.push_back({newMenu, groupName});
 
@@ -142,7 +138,7 @@ QStringList QLayoutMainWindow::availableLayouts() const
 {
     QStringList list;
     
-    for (auto element : m_layoutMenus)
+    for (auto&& element : m_layoutMenus)
     {
         list.append(element.name);
     }
@@ -165,27 +161,32 @@ void QLayoutMainWindow::initLayoutSystem(QMenu *parentMenu)
     // Removing central widget
     setCentralWidget(nullptr);
 
-    m_parentMenu = parentMenu;
+    m_layoutMenu = parentMenu;
 
     // Adding Save and Load buttons
-    auto saveAction = new QAction(tr("Save"), m_parentMenu);
+    auto saveAction = new QAction(tr("Save"), m_layoutMenu);
 
     connect(saveAction,
             &QAction::triggered,
             this,
             [this](){ saveLayout(); });
 
-    auto loadDefaultAction = new QAction(tr("Default"), m_parentMenu);
+    auto loadDefaultAction = new QAction(tr("Default"), m_layoutMenu);
 
     connect(loadDefaultAction,
             &QAction::triggered,
             [this](){ applyLayout(QString()); });
 
-    m_parentMenu->addAction(saveAction);
-    m_parentMenu->addSeparator();
-    m_parentMenu->addAction(loadDefaultAction);
+    m_layoutMenu->addAction(saveAction);
+    m_layoutMenu->addSeparator();
+    m_layoutMenu->addAction(loadDefaultAction);
 
     updateAvailableLayouts();
+}
+
+void QLayoutMainWindow::initDockWidgetMenu(QMenu* parentMenu)
+{
+    m_windowMenu = parentMenu;
 }
 
 void QLayoutMainWindow::saveLayout()

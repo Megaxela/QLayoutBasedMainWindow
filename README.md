@@ -27,10 +27,15 @@ public:
     explicit MainWindow(QWidget* parent=nullptr) : 
         Windows::QLayoutBasedMainWindow(parent)
     {
-        // This call is not required, but it
+        // Argument is not required (it can be `nullptr`), but it
         // allows user to save/load and change
         // layout in menu bar.
         initLayoutSystem(m_ui->menuLayout);
+        
+        // This call is not required. It specifies
+        // `QMenu` object, that will handle `QAction`s 
+        // for `QDockWidget` manipulation.
+        initDockWidgetMenu(m_ui->menuWindow);
     
         addDockWidget<QListWidget>(
             "Some list widget" // It will be used as dock name
@@ -40,6 +45,18 @@ public:
         addDockWidget<QTreeWidget>(
             "Some tree widget" // It will be used as dock name
             "SomeTreeWidget"   // This value has to be unique, it used for save/load.
+        );
+        
+        // If you have to easily get created 
+        // widget, instead of dock widget, you 
+        // can use this statement.
+        auto createdWidget = dynamic_cast<QListWidget*>(
+            getWidgetFromDockWidget(
+                addDockWidget<QListWidget>(
+                    "Another dock widget"
+                    "AnotherDockWidget
+                )
+            )
         );
         
         // This function is required to load

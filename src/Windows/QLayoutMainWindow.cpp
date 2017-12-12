@@ -39,7 +39,7 @@ void QLayoutMainWindow::updateAvailableLayouts()
         return;
     }
 
-    for (auto groupName : groups)
+    for (auto&& groupName : groups)
     {
         layouts.beginGroup(groupName);
 

@@ -3,6 +3,7 @@ It's base for dock based layout without main widget.
 
 ## Build
 It's CMake based library, so here is steps to build it as static library.
+
 0. Clone repo: `git clone https://github.com/Megaxela/QLayoutBasedMainWindow`
 0. Go into repo: `cd QLayoutBasedMainWindow`
 0. Create build folder: `mkdir build`

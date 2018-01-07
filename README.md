@@ -55,7 +55,7 @@ public:
             getWidgetFromDockWidget(
                 addDockWidget<QListWidget>(
                     "Another dock widget"
-                    "AnotherDockWidget
+                    "AnotherDockWidget"
                 )
             )
         );

@@ -20,8 +20,6 @@ set(UI_FILES
         ui/layout_saving_dialog.ui
 )
 
-include_directories(include)
-
 #------------------------
 # Setuping Qt
 #------------------------
@@ -55,4 +53,9 @@ add_library(QLayoutBasedMainWindow STATIC
         ${RESOURCE_ADDED}
         ${QOBJECT_HEADERS}
 )
+
+target_include_directories(QLayoutBasedMainWindow PUBLIC
+        include
+)
+
 qt5_use_modules(QLayoutBasedMainWindow Core Widgets Gui)

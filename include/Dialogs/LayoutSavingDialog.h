@@ -26,6 +26,10 @@ public:
      */
     explicit LayoutSavingDialog(QWidget* parent);
 
+    // Preventing copying
+    LayoutSavingDialog(const LayoutSavingDialog&) = delete;
+    LayoutSavingDialog& operator=(const LayoutSavingDialog&) = delete;
+
     /**
      * @brief Method for getting entered layout name.
      * If returned value is empty, user is canceled
@@ -46,10 +50,6 @@ private slots:
     void onCancelButtonPressed();
 
 private:
-
-    // Preventing copying
-    LayoutSavingDialog(const LayoutSavingDialog&) = delete;
-    LayoutSavingDialog& operator=(const LayoutSavingDialog&) = delete;
 
     /**
      * @brief Method for connecting all widgets to slots.

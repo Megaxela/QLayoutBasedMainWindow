@@ -189,24 +189,13 @@ private:
             name()
         {}
 
-        LayoutDataHolder(QMenu* menuEntry, const QString& name) :
+        LayoutDataHolder(QMenu* menuEntry, QString name) :
             menuEntry(menuEntry),
-            name(name)
+            name(std::move(name))
         {}
 
-        explicit LayoutDataHolder(const LayoutDataHolder& holder) :
-            menuEntry(holder.menuEntry),
-            name(holder.name)
-        {
-
-        }
-
-        LayoutDataHolder& operator=(const LayoutDataHolder& holder)
-        {
-            menuEntry = holder.menuEntry;
-            name = holder.name;
-            return (*this);
-        }
+        LayoutDataHolder(const LayoutDataHolder& holder) = default;
+        LayoutDataHolder& operator=(const LayoutDataHolder& holder) = default;
 
         QMenu* menuEntry;
         QString name;

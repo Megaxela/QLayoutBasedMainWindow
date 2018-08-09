@@ -1,9 +1,4 @@
-//
-// Created by megaxela on 8/9/17.
-//
-
 #pragma once
-
 
 #include <QDialog>
 

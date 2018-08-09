@@ -1,11 +1,5 @@
-//
-// Created by megaxela on 8/9/17.
-//
-
 #include <QtCore/QSettings>
 #include "include/Windows/QLayoutMainWindow.h"
-#include <QMenu>
-#include <iostream>
 #include <include/Dialogs/LayoutSavingDialog.h>
 
 QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :

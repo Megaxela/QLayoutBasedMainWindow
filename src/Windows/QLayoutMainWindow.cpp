@@ -1,6 +1,7 @@
 #include <QtCore/QSettings>
-#include <include/Windows/QLayoutMainWindow.h>
-#include <include/Dialogs/LayoutSavingDialog.h>
+#include <Windows/QLayoutMainWindow.h>
+#include <Dialogs/LayoutSavingDialog.h>
+#include <iostream>
 
 QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :
     QMainWindow(parent),

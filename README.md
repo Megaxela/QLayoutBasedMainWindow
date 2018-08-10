@@ -20,13 +20,13 @@ namespace Ui
     class MainWindow;
 }
 
-class MainWindow : public QLayoutBasedMainWindow
+class MainWindow : public QLayoutMainWindow
 {
     Q_OBJECT
     
 public:
     explicit MainWindow(QWidget* parent=nullptr) : 
-        QLayoutBasedMainWindow(parent)
+        QLayoutMainWindow(parent)
     {
         // Argument is not required (it can be `nullptr`), but it
         // allows user to save/load and change

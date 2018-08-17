@@ -44,7 +44,6 @@ void QLayoutMainWindow::updateAvailableLayouts()
 
     if (m_layoutMenu == nullptr)
     {
-        std::cerr << "Can't update available layouts without parent menu layout" << std::endl;
         return;
     }
 

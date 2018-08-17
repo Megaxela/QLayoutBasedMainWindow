@@ -1,16 +1,30 @@
 #include <QtCore/QSettings>
 #include <Windows/QLayoutMainWindow.h>
 #include <Dialogs/LayoutSavingDialog.h>
-#include <iostream>
+
 
 QLayoutMainWindow::QLayoutMainWindow(QWidget *parent) :
     QMainWindow(parent),
     m_layoutMenus(),
     m_layoutMenu(nullptr),
     m_windowMenu(nullptr),
-    m_layoutStorageFilename("layout.ini")
+    m_layoutStorageFilename("layout.ini"),
+    m_stateSavingEnabled(true)
 {
 
+}
+
+QLayoutMainWindow::~QLayoutMainWindow()
+{
+    if (m_stateSavingEnabled)
+    {
+        saveCurrentLayoutState();
+    }
+}
+
+void QLayoutMainWindow::setStateCloseEnabled(bool enabled)
+{
+    m_stateSavingEnabled = enabled;
 }
 
 void QLayoutMainWindow::updateAvailableLayouts()
@@ -221,4 +235,31 @@ QWidget *QLayoutMainWindow::getWidgetFromDockWidget(QDockWidget *dockWidget)
         dockWidget->widget()
             ->children()[0]
     )->itemAt(0)->widget();
+}
+
+void QLayoutMainWindow::saveCurrentLayoutState()
+{
+    QSettings layouts(m_layoutStorageFilename, QSettings::IniFormat);
+
+    layouts.beginGroup("current-layout");
+
+    layouts.setValue("dock_location", getCurrentLayout());
+
+    layouts.endGroup();
+}
+
+void QLayoutMainWindow::loadCurrentLayoutState()
+{
+    QSettings layouts(m_layoutStorageFilename, QSettings::IniFormat);
+
+    if (!layouts.childGroups().contains("current-layout"))
+    {
+        return;
+    }
+
+    layouts.beginGroup("current-layout");
+
+    restoreState(layouts.value("dock_location").toByteArray(), getWindowVersion());
+
+    layouts.endGroup();
 }

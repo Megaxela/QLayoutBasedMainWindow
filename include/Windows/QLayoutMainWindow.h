@@ -23,11 +23,18 @@ public:
     /**
      * @brief Virtual destructor.
      */
-    ~QLayoutMainWindow() override = default;
+    ~QLayoutMainWindow() override;
 
     // Preventing copying
     QLayoutMainWindow(const QLayoutMainWindow&) = delete;
     QLayoutMainWindow& operator=(const QLayoutMainWindow&) = delete;
+
+    /**
+     * @brief Method for toggling state saving after close to
+     * restore it at next open. Loading performs with `loadCurrentLayoutState` method.
+     * @param enabled Was enabled.
+     */
+    void setStateCloseEnabled(bool enabled);
 
     /**
      * @brief Method for setting layout storage filename.
@@ -134,6 +141,18 @@ public:
         return dockWidget;
     }
 
+    /**
+     * @brief Method for saving current layout
+     * state to layout's file.
+     */
+    void saveCurrentLayoutState();
+
+    /**
+     * @brief Method for loading current layout
+     * state from layout's file.
+     */
+    void loadCurrentLayoutState();
+
 protected:
 
     /**
@@ -201,4 +220,5 @@ private:
     QMenu* m_layoutMenu;
     QMenu* m_windowMenu;
     QString m_layoutStorageFilename;
+    bool m_stateSavingEnabled;
 };

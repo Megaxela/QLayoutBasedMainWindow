@@ -51,7 +51,15 @@ target_include_directories(QLayoutBasedMainWindow PUBLIC
 )
 
 target_compile_options(QLayoutBasedMainWindow
-    PRIVATE -ansi -pedantic -Wall -Wextra -Weffc++ -Woverloaded-virtual -Winit-self -Wunreachable-code
+    PRIVATE
+        -ansi
+        -pedantic
+        -Wall
+        -Wextra
+        -Weffc++
+        -Woverloaded-virtual
+        -Winit-self
+        -Wunreachable-code
 )
 
 target_link_libraries(QLayoutBasedMainWindow
